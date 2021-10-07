@@ -19,7 +19,8 @@ k3d cluster create ${CLUSTER_NAME} \
 
 # TODO: add check for helm binary. Must be v3 or better.
 echo "Installing firefly stack..."
+kubectl create namespace firefly
 
-helm install firefly ./helm/firefly
+helm install --namespace firefly firefly ./helm/firefly
 
 cd $WORKDIR
