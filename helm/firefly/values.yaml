@@ -1,17 +1,4 @@
 jupyterhub:
-  cull:
-    enabled: true
-  scheduling:
-    userScheduler:
-      enabled: true
-    podPriority:
-      enabled: true
-    userPlaceholder:
-      enabled: false
-      replicas: 0
-  prePuller:
-    hook:
-      enabled: false
   singleuser:
     image:
       name: jupyterhub/k8s-singleuser-sample
@@ -25,8 +12,6 @@ jupyterhub:
         password: firefly
       JupyterHub:
         authenticator_class: dummy
-    db:
-      type: sqlite-memory
     allowNamedServers: true
     redirectToServer: false
     namedServerLimitPerUser: 2
