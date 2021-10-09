@@ -1,3 +1,6 @@
+nginx-ingress-controller:
+  enabled: true
+
 jupyterhub:
   proxy:
     service:
