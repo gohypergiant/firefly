@@ -8,6 +8,7 @@ dependencies:
   - name: nginx-ingress-controller
     repository: https://charts.bitnami.com/bitnami
     version: 7.6.21
+    condition: nginx-ingress-controller.enabled
   - name: jupyterhub
     repository: https://jupyterhub.github.io/helm-chart/
     version: 1.1.3-n097.hb6688f54
