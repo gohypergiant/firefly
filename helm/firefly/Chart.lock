@@ -1,6 +1,9 @@
 dependencies:
+- name: nginx-ingress-controller
+  repository: https://charts.bitnami.com/bitnami
+  version: 7.6.21
 - name: jupyterhub
   repository: https://jupyterhub.github.io/helm-chart/
   version: 1.1.3-n097.hb6688f54
-digest: sha256:7df387931f00d5dc791bd745c24f4f08069a0a1372d2d24ff06edbb77577d595
-generated: "2021-10-07T18:17:37.075101262-04:00"
+digest: sha256:227235fb48828899bb706e2b83c4b33ba3cb1fbaa5874a1236f4328396839c71
+generated: "2021-10-09T09:55:29.716986406-04:00"

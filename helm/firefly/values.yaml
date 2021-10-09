@@ -1,4 +1,11 @@
 jupyterhub:
+  proxy:
+    service:
+      type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - localhost
   singleuser:
     image:
       name: jupyterhub/k8s-singleuser-sample
