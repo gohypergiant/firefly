@@ -24,6 +24,11 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Add depdendency helm repos
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         env:
