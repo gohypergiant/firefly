@@ -1,0 +1,27 @@
+nginx-ingress-controller:
+  enabled: true
+
+jupyterhub:
+  proxy:
+    service:
+      type: ClusterIP
+  ingress:
+    enabled: true
+    hosts:
+      - localhost
+  singleuser:
+    image:
+      name: jupyterhub/k8s-singleuser-sample
+      tag: 1.1.2-n020.h2568a1c3
+  hub:
+    config:
+      Authenticator:
+        admin_users:
+          - firefly
+      DummyAuthenticator:  # this is only appropriate for local environments
+        password: firefly
+      JupyterHub:
+        authenticator_class: dummy
+    allowNamedServers: true
+    redirectToServer: false
+    namedServerLimitPerUser: 2
