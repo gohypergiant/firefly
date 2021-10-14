@@ -33,6 +33,7 @@
 
     {% block stylesheet %}
     <link rel="stylesheet" href="{{ static_url("css/style.min.css") }}" type="text/css"/>
+    <link rel="stylesheet" href="/hub/static/external/override.css" type="text/css"/>
     {% endblock %}
     {% block favicon %}
     <link rel="icon" href="{{ static_url("favicon.ico") }}" type="image/x-icon">
@@ -103,7 +104,7 @@
       <div class="navbar-header">
         {% block logo %}
         <span id="jupyterhub-logo" class="pull-left">
-            <a href="{{logo_url or base_url}}"><img src='{{base_url}}logo' alt='JupyterHub' class='jpy-logo' title='Home'/></a>
+            <a href="{{logo_url or base_url}}"><img src='/hub/static/external/hyperdrive-logo.webp' alt='Hyperdrive Notebooks' height='80px' title='Home'/></a>
         </span>
         {% endblock %}
         {% if user %}

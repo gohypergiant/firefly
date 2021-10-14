@@ -1,0 +1,26 @@
+
+
+.navbar-default {
+    background-color: #183a5b;
+    border-color: #183a5b;
+}
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #aaa;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+}
+
+.navbar-default .navbar-text {
+    color: #aaa;
+}
