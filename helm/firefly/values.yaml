@@ -25,3 +25,19 @@ jupyterhub:
     allowNamedServers: true
     redirectToServer: false
     namedServerLimitPerUser: 2
+    extraVolumes:
+      - name: hub-templates
+        configMap:
+          name: hub-templates
+      - name: hub-external
+        configMap:
+          name: hub-external
+    extraVolumeMounts:
+      - name: hub-templates
+        mountPath: /etc/jupyterhub/templates
+      - name: hub-external
+        mountPath: /usr/local/share/jupyterhub/static/external
+    extraConfig:
+      templates: |
+        c.JupyterHub.template_paths.insert(0, "/etc/jupyterhub/templates")
+        
