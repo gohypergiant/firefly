@@ -27,7 +27,7 @@ jobs:
       with:
         command: validate
         arguments: -syntax-only
-        target: firefly.pkr.hcl
+        target: ./packer
 
     # Initialize and install plugins
     - name: Validate Template
@@ -35,7 +35,7 @@ jobs:
       with:
         command: init
         arguments: -upgrade
-        target: firefly.pkr.hcl
+        target: ./packer
 
     # build artifact
     - name: Build Artifact
@@ -43,6 +43,6 @@ jobs:
       with:
         command: build
         arguments: "-color=false -on-error=abort"
-        target: firefly.pkr.hcl
+        target: ./packer
       env:
         PACKER_LOG: 1

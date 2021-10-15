@@ -1,7 +1,12 @@
 build {
   sources = ["source.amazon-ebs.firefly"]
 
+
   provisioner "shell" {
-    script = "./build.sh"
+    script = "../scripts/install.sh"
+  }
+  
+  provisioner "shell" {
+    script = "../scripts/build.sh"
   }
 }

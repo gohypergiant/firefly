@@ -1,6 +1,5 @@
 source "amazon-ebs" "firefly" {
-    # use the `name` field to name a build in the logs.
-    name          = var.build_name
+
     ami_name      = var.ami_name
     instance_type = var.instance_type
     region        = var.aws_region
@@ -12,10 +11,10 @@ source "amazon-ebs" "firefly" {
 
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*"
+      name                = "amzn2-ami-hvm-2.0.20211001.1-x86_64-gp2"
     }
     most_recent = true
-    owners      = ["099720109477"]
+    owners      = ["137112412989"]
   }
   ssh_username = "ubuntu"
 }
