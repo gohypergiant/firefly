@@ -4,11 +4,9 @@ source "amazon-ebs" "firefly" {
     instance_type   = var.instance_type
     region          = var.aws_region
     skip_create_ami = var.skip_create_ami
+    access_key      = var.aws_access_key
+    secret_key      = var.aws_secret_key
 
-    assume_role {
-        role_arn     = "arn:aws:sts::499504614116/AWSReservedSSO_PowerUserAccess_5ffa62a0c9832390"
-        session_name = "firefly_packer"
-    }
 
   source_ami_filter {
     filters = {
