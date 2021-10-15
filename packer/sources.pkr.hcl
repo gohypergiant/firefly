@@ -1,8 +1,9 @@
 source "amazon-ebs" "firefly" {
 
-    ami_name      = var.ami_name
-    instance_type = var.instance_type
-    region        = var.aws_region
+    ami_name        = var.ami_name
+    instance_type   = var.instance_type
+    region          = var.aws_region
+    skip_create_ami = var.skip_create_ami
 
     assume_role {
         role_arn     = "arn:aws:sts::499504614116/AWSReservedSSO_PowerUserAccess_5ffa62a0c9832390"

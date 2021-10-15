@@ -3,10 +3,11 @@ build {
 
 
   provisioner "shell" {
-    script = "../scripts/install.sh"
+    script = "./scripts/install.sh"
+    
   }
-  
+
   provisioner "shell" {
-    script = "../scripts/build.sh"
+    script = "./scripts/build.sh"
   }
 }

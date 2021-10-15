@@ -1,3 +1,8 @@
+variable "skip_create_ami" {
+  type = string
+  default = "true"
+}
+
 variable "aws_region" {
   type = string
   default = "us-east-2"  
