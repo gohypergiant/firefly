@@ -13,6 +13,7 @@ FIREFLY_NAMESPACE="firefly"
 # k3s version must be 1.21.4 or better to avoid local-path permissions bug
 k3d registry create ${REGISTRY_NAME}.localhost -p ${REGISTRY_PORT} ;
 k3d cluster create ${CLUSTER_NAME} \
+  --gpus all \
   -p 8090:80@loadbalancer \
   --servers ${SERVER_COUNT} \
   --agents ${AGENT_COUNT} \
