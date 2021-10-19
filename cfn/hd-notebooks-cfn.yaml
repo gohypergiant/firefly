@@ -178,6 +178,7 @@ Resources:
               command: /home/ec2-user/firefly/build.sh
               env:
                 FIREFLY_ADMIN_PASS: !Ref InitialAdminPassword
+              cwd: /home/ec2-user/firefly
     Properties:
       ImageId: !FindInMap 
         - AWSRegion2AMI
