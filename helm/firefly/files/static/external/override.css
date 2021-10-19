@@ -97,7 +97,7 @@ body {
 }
 
 #login-main form {
-    display: inherit;
+    display: block;
     margin: 10px auto 10px auto;
     position: relative;
     top: 50%;
