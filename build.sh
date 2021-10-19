@@ -8,6 +8,7 @@ REGISTRY_PORT="8081"
 SERVER_COUNT=1
 AGENT_COUNT=0
 FIREFLY_NAMESPACE="firefly"
+KUBE_VERSION="v1.21.0"
 
 # TODO: add check for k3d >= 5.0.0
 # k3s version must be 1.21.4 or better to avoid local-path permissions bug
