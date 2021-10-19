@@ -17,7 +17,7 @@ chmod 644 /lib/systemd/system/docker.service
 systemctl daemon-reload
 systemctl restart docker
 
-KUBE_VERSION=v1.21.0
+KUBE_VERSION=v1.21.5+k3s1
 
 echo "==> Installing kubectl $KUBE_VERSION"
 cd /tmp
