@@ -8,7 +8,7 @@ REGISTRY_PORT="8081"
 SERVER_COUNT=1
 AGENT_COUNT=0
 FIREFLY_NAMESPACE="firefly"
-IMAGE_VERSION="rancher/k3s:v1.17.13-k3s2"
+IMAGE_VERSION="rancher/k3s:v5.0.1-k3s2"
 
 # TODO: add check for k3d >= 5.0.0
 # k3s version must be 1.21.4 or better to avoid local-path permissions bug
