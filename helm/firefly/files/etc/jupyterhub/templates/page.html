@@ -123,8 +123,10 @@
           {% block nav_bar_left_items %}
             <li><a href="{{base_url}}home">Home</a></li>
             <li><a href="{{base_url}}token">Token</a></li>
-            {% if 'admin:users' in parsed_scopes and 'admin:servers' in parsed_scopes %}
-            <li><a href="{{base_url}}admin">Admin</a></li>
+            <li><a href="{{base_url}}change-password">Change Password</a></li>
+            {% if user.admin %}
+                <li><a href="{{base_url}}authorize">Authorize Users</a></li>
+                <li><a href="{{base_url}}admin">Admin</a></li>
             {% endif %}
             {% if services %}
             <li class="dropdown">
