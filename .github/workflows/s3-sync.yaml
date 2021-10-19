@@ -3,7 +3,7 @@ name: Upload Cloud Formation
 on:
   push:
     branches:
-    - stable
+    - dev
 
 jobs:
   deploy:
