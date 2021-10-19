@@ -18,12 +18,12 @@ Parameters:
   PublicSubnets:
     Description: Select 2 or more public subnets in the given VPC for the Firefly ALB and host instance  
     Type: 'List<AWS::EC2::Subnet::Id>'
-  InitialAdminPassword:
-    NoEcho: 'true'
-    Description: Initial admin user password
+  ReleaseBranch:
+    Description: Select a release branch to deploy.
     Type: String
-    MinLength: '8'
-    MaxLength: '41'
+    Default: stable
+    AllowedValues: [stable, dev]
+    ConstraintDescription: Must be a valid release branch
   HostnameWithDomain:
     Description: FQDN that will be used to access Firefly. Must match the certificate and the zone specified.
     Type: String
@@ -56,9 +56,9 @@ Metadata:
           - TLSCertificateARN
       - 
         Label: 
-          default: "JupyterHub Configuration"
+          default: "Additional Configuration"
         Parameters: 
-          - InitialAdminPassword
+          - ReleaseBranch
     ParameterLabels: 
       KeyName: 
         default: "Which SSH key pair should we use?"
@@ -74,8 +74,8 @@ Metadata:
         default: "What is the Hosted Zone ID for Route53 domain in the above FQDN?"
       TLSCertificateARN: 
         default: "What is the ARN of the AWS Certificate Manager certificate to use for HTTPS?"
-      InitialAdminPassword:
-        default: "What should the initial 'admin' user password be for JupyterHub?"
+      ReleaseBranch:
+        default: "Which branch of Hyperdrive Notebooks would you like to deploy?"
 Mappings:
   AWSRegion2AMI:
     us-east-1:
@@ -164,7 +164,7 @@ Resources:
             "/home/ec2-user/bootstrap.sh":
               content: !Sub |
                 #!/bin/bash -xe
-                git clone https://github.com/gohypergiant/firefly.git /home/ec2-user/firefly
+                git clone -b ${ReleaseBranch} https://github.com/gohypergiant/firefly.git /home/ec2-user/firefly
                 chown -R ec2-user:ec2-user /home/ec2-user/firefly
               mode: "000500"
               owner: "root"
@@ -176,8 +176,6 @@ Resources:
               command: /home/ec2-user/firefly/prep.sh
             03-run-build-sh:
               command: /home/ec2-user/firefly/build.sh
-              env:
-                FIREFLY_ADMIN_PASS: !Ref InitialAdminPassword
               cwd: /home/ec2-user/firefly
     Properties:
       ImageId: !FindInMap 
@@ -262,5 +260,5 @@ Outputs:
       - ''
       - - 'https://'
         - !Ref HostnameWithDomain
-        - /
-    Description: Hyperdrive Notebooks URL for JupyterHub
+        - /hub/signup
+    Description: Hyperdrive Notebooks Signup URL for JupyterHub
