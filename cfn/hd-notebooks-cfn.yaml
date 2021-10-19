@@ -1,0 +1,266 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  AWS CloudFormation template to deploy Hypergiant Firefly on a single EC2 instance
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the Firefly host instance
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: Must be the name of an existing EC2 KeyPair.
+  InstanceType:
+    Description: Firefly host EC2 instance type
+    Type: String
+    Default: t3.large
+    AllowedValues: [c4.2xlarge, c4.4xlarge, c4.8xlarge, c4.large, c4.xlarge, c5.12xlarge, c5.18xlarge, c5.24xlarge, c5.2xlarge, c5.4xlarge, c5.9xlarge, c5.large, c5.xlarge, c5a.12xlarge, c5a.16xlarge, c5a.24xlarge, c5a.2xlarge, c5a.4xlarge, c5a.8xlarge, c5a.large, c5a.xlarge, c5ad.12xlarge, c5ad.16xlarge, c5ad.24xlarge, c5ad.2xlarge, c5ad.4xlarge, c5ad.8xlarge, c5ad.large, c5ad.xlarge, c5d.12xlarge, c5d.18xlarge, c5d.24xlarge, c5d.2xlarge, c5d.4xlarge, c5d.9xlarge, c5d.large, c5d.xlarge, c5n.18xlarge, c5n.2xlarge, c5n.4xlarge, c5n.9xlarge, c5n.large, c5n.xlarge, i3.16xlarge, i3.2xlarge, i3.4xlarge, i3.8xlarge, i3.large, i3.xlarge, i3en.12xlarge, i3en.24xlarge, i3en.2xlarge, i3en.3xlarge, i3en.6xlarge, i3en.large, i3en.xlarge, m4.10xlarge, m4.16xlarge, m4.2xlarge, m4.4xlarge, m4.large, m4.xlarge, m5.12xlarge, m5.16xlarge, m5.24xlarge, m5.2xlarge, m5.4xlarge, m5.8xlarge, m5.large, m5.xlarge, m5a.12xlarge, m5a.16xlarge, m5a.24xlarge, m5a.2xlarge, m5a.4xlarge, m5a.8xlarge, m5a.large, m5a.xlarge, m5ad.12xlarge, m5ad.16xlarge, m5ad.24xlarge, m5ad.2xlarge, m5ad.4xlarge, m5ad.8xlarge, m5ad.large, m5ad.xlarge, m5d.12xlarge, m5d.16xlarge, m5d.24xlarge, m5d.2xlarge, m5d.4xlarge, m5d.8xlarge, m5d.large, m5d.xlarge, m5zn.12xlarge, m5zn.2xlarge, m5zn.3xlarge, m5zn.6xlarge, m5zn.large, m5zn.xlarge, r5.12xlarge, r5.16xlarge, r5.24xlarge, r5.2xlarge, r5.4xlarge, r5.8xlarge, r5.large, r5.xlarge, r5a.12xlarge, r5a.16xlarge, r5a.24xlarge, r5a.2xlarge, r5a.4xlarge, r5a.8xlarge, r5a.large, r5a.xlarge, r5ad.12xlarge, r5ad.16xlarge, r5ad.24xlarge, r5ad.2xlarge, r5ad.4xlarge, r5ad.8xlarge, r5ad.large, r5ad.xlarge, r5d.12xlarge, r5d.16xlarge, r5d.24xlarge, r5d.2xlarge, r5d.4xlarge, r5d.8xlarge, r5d.large, r5d.xlarge, r5n.12xlarge, r5n.16xlarge, r5n.24xlarge, r5n.2xlarge, r5n.4xlarge, r5n.8xlarge, r5n.large, r5n.xlarge, t3.2xlarge, t3.large, t3.xlarge, t3a.2xlarge, t3a.large, t3a.xlarge, x1.16xlarge, x1.32xlarge, x1e.16xlarge, x1e.2xlarge, x1e.32xlarge, x1e.4xlarge, x1e.8xlarge, x1e.xlarge]
+    ConstraintDescription: Must be a valid EC2 instance type.
+  VPC:
+    Description: ID of the VPC where you want to deploy Firefly  
+    Type: 'AWS::EC2::VPC::Id'
+  PublicSubnets:
+    Description: Select 2 or more public subnets in the given VPC for the Firefly ALB and host instance  
+    Type: 'List<AWS::EC2::Subnet::Id>'
+  InitialAdminPassword:
+    NoEcho: 'true'
+    Description: Initial admin user password
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+  HostnameWithDomain:
+    Description: FQDN that will be used to access Firefly. Must match the certificate and the zone specified.
+    Type: String
+    MinLength: 1
+    MaxLength: 63
+    Default: notebooks.example.com
+  HostedZoneId:
+    Description: Hosted Zone ID for the Route53 domain to be updated. An ALIAS record will be added to this zone.
+    Type: AWS::Route53::HostedZone::Id
+  TLSCertificateARN:
+    Description: ARN of the AWS Certificate Manager certificate used for HTTPS access through the ALB.
+    Type: String
+Metadata: 
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - 
+        Label: 
+          default: "HD Notebooks Host Configuration"
+        Parameters: 
+          - KeyName
+          - InstanceType
+      - 
+        Label: 
+          default: "Network and DNS Configuration"
+        Parameters: 
+          - VPC
+          - PublicSubnets
+          - HostnameWithDomain
+          - HostedZoneId
+          - TLSCertificateARN
+      - 
+        Label: 
+          default: "JupyterHub Configuration"
+        Parameters: 
+          - InitialAdminPassword
+    ParameterLabels: 
+      KeyName: 
+        default: "Which SSH key pair should we use?"
+      InstanceType: 
+        default: "Which EC2 instance type should we use?"
+      VPC: 
+        default: "Which VPC should we deploy to?"
+      PublicSubnets: 
+        default: "Which subnets in the above VPC should we use? (select 2 or more)"
+      HostnameWithDomain: 
+        default: "What FQDN should we configure to access the HD Notebooks host?"
+      HostedZoneId: 
+        default: "What is the Hosted Zone ID for Route53 domain in the above FQDN?"
+      TLSCertificateARN: 
+        default: "What is the ARN of the AWS Certificate Manager certificate to use for HTTPS?"
+      InitialAdminPassword:
+        default: "What should the initial 'admin' user password be for JupyterHub?"
+Mappings:
+  AWSRegion2AMI:
+    us-east-1:
+      AMI: ami-02e136e904f3da870
+    us-east-2:
+      AMI: ami-074cce78125f09d61
+    us-west-1:
+      AMI: ami-03ab7423a204da002
+    us-west-2:
+      AMI: ami-013a129d325529d4d
+Resources:
+  FireflyHostSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: >-
+        Enable public SSH access and port 8090 access from the ALB
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '8090'
+          ToPort: '8090'
+          SourceSecurityGroupId:
+            Ref: FireflyALBSecurityGroup
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+  FireflyALBSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: >-
+        Enable HTTP and HTTPS access
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: '443'
+          ToPort: '443'
+          CidrIp: 0.0.0.0/0
+  FireflyHost:
+    Type: 'AWS::EC2::Instance'
+    Metadata:
+      'AWS::CloudFormation::Init':
+        configSets:
+          firefly_install:
+            - install_cfn
+            - install_firefly
+        install_cfn:
+          files:
+            "/etc/cfn/cfn-hup.conf":
+              content: !Sub |
+                [main]
+                stack=${AWS::StackId}
+                region=${AWS::Region}
+                # The interval used to check for changes to the resource metadata in minutes. Default is 15
+                interval=2
+              mode: "000400"
+              owner: "root"
+              group: "root"
+            "/etc/cfn/hooks.d/cfn-auto-reloader.conf":
+              content: !Sub |
+                [cfn-auto-reloader-hook]
+                triggers=post.update
+                path=Resources.FireflyHost.Metadata.AWS::CloudFormation::Init
+                action=/opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource FireflyHost --configsets firefly_install --region ${AWS::Region}
+              mode: "000400"
+              owner: "root"
+              group: "root"
+          services:
+            sysvinit:
+              cfn-hup:
+                enabled: 'true'
+                ensureRunning: 'true'
+                files:
+                  - /etc/cfn/cfn-hup.conf
+                  - /etc/cfn/hooks.d/cfn-auto-reloader.conf
+        install_firefly:
+          packages:
+            yum:
+              docker: []
+              git: []
+          files:
+            "/home/ec2-user/bootstrap.sh":
+              content: !Sub |
+                #!/bin/bash -xe
+                git clone https://github.com/gohypergiant/firefly.git /home/ec2-user/firefly
+                chown -R ec2-user:ec2-user /home/ec2-user/firefly
+              mode: "000500"
+              owner: "root"
+              group: "root"
+          commands:
+            01-run-bootstrap-sh:
+              command: /home/ec2-user/bootstrap.sh
+            02-run-prep-sh:
+              command: /home/ec2-user/firefly/prep.sh
+            03-run-build-sh:
+              command: /home/ec2-user/firefly/build.sh
+              env:
+                FIREFLY_ADMIN_PASS: !Ref InitialAdminPassword
+              cwd: /home/ec2-user/firefly
+    Properties:
+      ImageId: !FindInMap 
+        - AWSRegion2AMI
+        - !Ref 'AWS::Region'
+        - AMI
+      KeyName:
+        Ref: KeyName
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroupIds:
+        - Ref: FireflyHostSecurityGroup
+      SubnetId: !Select 
+        - 0
+        - !Ref PublicSubnets
+      Tags:
+        - Key: Name
+          Value: FireflyHost
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp2
+            VolumeSize: '30'
+            DeleteOnTermination: 'true'
+            Encrypted: 'true'
+      UserData:
+        "Fn::Base64":
+          !Sub |
+            #!/bin/bash -xe
+            # Get the latest CloudFormation package
+            yum update -y aws-cfn-bootstrap
+            # Start cfn-init
+            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r FireflyHost  --configsets firefly_install --region ${AWS::Region} || error_exit 'Failed to run cfn-init'
+            # Start up the cfn-hup daemon to listen for changes to the EC2 instance metadata
+            /opt/aws/bin/cfn-hup || error_exit 'Failed to start cfn-hup'
+            # All done so signal success
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackId} --resource FireflyHost --region ${AWS::Region}
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+  ApplicationLoadBalancer:
+    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Properties:
+      Scheme: 'internet-facing'
+      Name: FireflyALB
+      Subnets: !Ref PublicSubnets
+      SecurityGroups:
+        - !Ref FireflyALBSecurityGroup
+  ALBListener:
+    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: '443'
+      Protocol: HTTPS
+      Certificates: 
+        - CertificateArn: !Ref TLSCertificateARN
+  ALBTargetGroup:
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Properties:
+      Name: FireflyTargetGroup
+      Port: 8090
+      Protocol: HTTP
+      VpcId: !Ref VPC
+      TargetType: instance
+      Targets:
+        - Id: !Ref FireflyHost
+  ALBAliasRecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt ApplicationLoadBalancer.DNSName
+        HostedZoneId: !GetAtt ApplicationLoadBalancer.CanonicalHostedZoneID
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref HostnameWithDomain
+      Type: A
+Outputs:
+  FireflyURL:
+    Value: !Join 
+      - ''
+      - - 'https://'
+        - !Ref HostnameWithDomain
+        - /
+    Description: Hyperdrive Notebooks URL for JupyterHub

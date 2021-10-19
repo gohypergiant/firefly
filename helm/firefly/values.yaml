@@ -7,9 +7,10 @@ jupyterhub:
       type: ClusterIP
   ingress:
     enabled: true
-    hosts:
-      - localhost
   singleuser:
+    defaultUrl: "/lab"
+    extraEnv:
+      JUPYERHUB_SINGLEUSER_APP: "jupyter_server.serverapp.ServerApp"
     image:
       name: jupyterhub/k8s-singleuser-sample
       tag: 1.1.2-n020.h2568a1c3
@@ -40,4 +41,3 @@ jupyterhub:
     extraConfig:
       templates: |
         c.JupyterHub.template_paths.insert(0, "/etc/jupyterhub/templates")
-        
