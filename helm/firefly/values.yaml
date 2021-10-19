@@ -15,14 +15,22 @@ jupyterhub:
       name: jupyterhub/k8s-singleuser-sample
       tag: 1.1.2-n020.h2568a1c3
   hub:
+    image:
+      name: jupyterhub/k8s-hub
+      tag: "1.1.3"
     config:
+      JupyterHub:
+        authenticator_class: nativeauthenticator.NativeAuthenticator
+        admin_access: false
       Authenticator:
         admin_users:
           - firefly
-      DummyAuthenticator:  # this is only appropriate for local environments
-        password: firefly
-      JupyterHub:
-        authenticator_class: dummy
+      NativeAuthenticator:
+        enable_signup: true
+        minimum_password_length: 10
+        check_common_password: true
+        ask_email_on_signup: false
+        allow_2fa: false
     allowNamedServers: true
     redirectToServer: false
     namedServerLimitPerUser: 2
