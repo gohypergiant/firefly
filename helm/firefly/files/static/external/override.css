@@ -57,6 +57,11 @@ body {
     border-color: #08474b;
 }
 
+.btn-jupyter:focus {
+    background-color: #0d787e;
+    border-color: #08474b;
+}
+
 .hg-login-area {
     flex: 1 1 0%;
 }
@@ -105,5 +110,9 @@ body {
 }
 
 #react-admin-hook {
+    flex: 1 1 auto;
+}
+
+.container {
     flex: 1 1 auto;
 }
