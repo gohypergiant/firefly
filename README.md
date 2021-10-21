@@ -59,8 +59,6 @@
     <img src="images/firefly-home.png" alt="Home">
 </div>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ### Built With
 
 - [k3s](https://k3s.io/)
