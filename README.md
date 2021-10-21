@@ -174,14 +174,6 @@ Or you can administer the Hub itself as an admin user
   </a>
 </div>
 
-Finally, you can launch and manage notebooks in a very familiar way right from the Hub's homepage
-
-<div align="center">
-  <a href="http://localhost:8090/hub/home">
-    <img src="images/firefly-home.png" alt="Home">
-  </a>
-</div>
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
