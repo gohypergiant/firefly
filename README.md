@@ -55,11 +55,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Hyperdrive Notebooks](images/firefly-home.png)](https://hypergiant.com/)
+<div align="center">
+    <img src="images/firefly-home.png" alt="Home">
+</div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 ### Built With
 
