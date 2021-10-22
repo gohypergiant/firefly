@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: firefly
+  namespace: firefly
+spec:
+  interval: 10m
+  url: https://github.com/gohypergiant/firefly
+  ref:
+    branch: stable

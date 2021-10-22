@@ -1,0 +1,118 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
+
+.navbar-default {
+    background-color: #183a5b;
+    border-color: #183a5b;
+    flex: 0 0 auto;
+}
+
+.navbar-nav {
+    float: left;
+    margin: 0;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #02b6a2;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+}
+
+.navbar-default .navbar-text {
+    color: #02b6a2;
+}
+
+#login-main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding-bottom: 15px;
+}
+
+#login-main .auth-form-header {
+    color: #fff;
+    background: #183a5b;
+}
+
+.btn-jupyter {
+    color: #fff;
+    background-color: #183a5b;
+    border-color: #112c47;
+}
+
+.btn-jupyter:hover {
+    background-color: #0d787e;
+    border-color: #08474b;
+}
+
+.btn-jupyter:focus {
+    background-color: #0d787e;
+    border-color: #08474b;
+}
+
+.hg-login-area {
+    flex: 1 1 0%;
+}
+
+.hg-welcome-grid {
+    display: grid;
+}
+
+.hg-welcome {
+    flex: 0 1 auto;
+    box-shadow: 0 8px 16px 0 rgba(24, 58, 91, 0.25);
+    border-width: 1px;
+    border-radius: 0.5rem;
+    position: relative;
+    padding-inline-start: 3.5rem;
+    padding-inline-end: 3.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.hg-welcome p {
+    text-align: center;
+    font-family: proxima-nova, sans-serif;
+    color: #183a5b
+}
+
+.hg-welcome ul {
+    margin: auto;
+}
+
+.hg-welcome li {
+    font-family: proxima-nova, sans-serif;
+    color: #183a5b
+}
+
+.hg-welcome-title {
+    font-size: 36px;
+}
+
+#login-main form {
+    display: block;
+    margin: 10px auto 10px auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#react-admin-hook {
+    flex: 1 1 auto;
+}
+
+.container {
+    flex: 1 1 auto;
+}
