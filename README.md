@@ -127,7 +127,7 @@
 
 #### Installation
 
-(@csears-hg to fill this out)
+See the [user manual](https://hyperdrive-notebooks.s3.us-east-2.amazonaws.com/hd-notebooks-aws-deployment-guide.pdf) for instructions
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
