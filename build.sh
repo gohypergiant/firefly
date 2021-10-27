@@ -21,6 +21,9 @@ k3d cluster create ${CLUSTER_NAME} \
   --kubeconfig-update-default=true \
   --k3s-arg "--disable=traefik@server:0"
 
+# merge the kubeconfig into the default location
+k3d kubeconfig merge -d firefly
+
 # TODO: add check for helm binary. Must be v3 or better.
 echo "Installing firefly stack..."
 kubectl create namespace ${FIREFLY_NAMESPACE}
