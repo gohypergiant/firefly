@@ -1,3 +1,5 @@
+### NOTICE: This repository has been archived and development moved to [gohypergiant/charts](https://github.com/gohypergiant/charts/tree/stable/charts/firefly)
+
 <div id="top"></div>
 <!-- PROJECT LOGO -->
 <br />
