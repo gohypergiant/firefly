@@ -22,7 +22,7 @@ Parameters:
     Description: Select a release branch to deploy.
     Type: String
     Default: stable
-    AllowedValues: [stable, dev]
+    AllowedValues: [stable, develop]
     ConstraintDescription: Must be a valid release branch
   HostnameWithDomain:
     Description: FQDN that will be used to access Firefly. Must match the certificate and the zone specified.
