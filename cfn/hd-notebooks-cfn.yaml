@@ -165,7 +165,9 @@ Resources:
               content: !Sub |
                 #!/bin/bash -xe
                 git clone -b ${ReleaseBranch} https://github.com/gohypergiant/firefly.git /home/ec2-user/firefly
+                git clone -b ${ReleaseBranch} https://github.com/gohypergiant/charts.git /home/ec2-user/charts
                 chown -R ec2-user:ec2-user /home/ec2-user/firefly
+                chown -R ec2-user:ec2-user /home/ec2-user/charts
               mode: "000500"
               owner: "root"
               group: "root"
