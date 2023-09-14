@@ -27,6 +27,6 @@ k3d kubeconfig merge -d firefly
 # TODO: add check for helm binary. Must be v3 or better.
 echo "Installing firefly stack..."
 kubectl create namespace ${FIREFLY_NAMESPACE}
-helm install --namespace ${FIREFLY_NAMESPACE} firefly ./helm/firefly
+helm install --namespace ${FIREFLY_NAMESPACE} firefly /home/ec2-user/charts/charts/firefly --set nginx-ingress-controller.enabled=true
 cd $WORKDIR
 echo "JupyterHub should be available at http://localhost:8090"
